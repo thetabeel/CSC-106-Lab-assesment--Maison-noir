@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board of Trustees — Maison Noir</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== DIRECTOR SPOTLIGHT ===== */
+    .director-card {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 3.5rem;
+      background: var(--surface);
+      border: 1px solid var(--gold);
+      margin-bottom: 4rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .director-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    }
+
+    .director-photo-wrap {
+      position: relative;
+    }
+
+    .director-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--gold-border);
+      z-index: 0;
+    }
+
+    .director-photo {
+      width: 260px;
+      height: 300px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      position: relative;
+      z-index: 1;
+      filter: grayscale(8%);
+      transition: filter 0.4s ease;
+    }
+
+    .director-card:hover .director-photo {
+      filter: grayscale(0%);
+    }
+
+    .director-badge {
+      display: inline-block;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--gold);
+      padding: 5px 16px;
+      margin-bottom: 1rem;
+    }
+
+    .director-name {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--black);
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+
+    .director-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+
+    .director-bio {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      line-height: 1.9;
+      max-width: 560px;
+      border-top: 1px solid var(--gold-border);
+      padding-top: 1.2rem;
+    }
+
+    /* ===== MEMBER CARDS ===== */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .member-card {
+      background: var(--surface);
+      border: 1px solid var(--gold-border);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      cursor: default;
+    }
+
+    .member-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .member-photo-wrap {
+      height: 280px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .member-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+      filter: grayscale(10%);
+    }
+
+    .member-card:hover .member-photo {
+      transform: scale(1.04);
+      filter: grayscale(0%);
+    }
+
+    .member-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(250,248,244,0.9), transparent);
+    }
+
+    .member-info {
+      padding: 1.4rem 1.6rem 1.8rem;
+      border-top: 2px solid var(--gold-border);
+      transition: border-color 0.4s ease;
+    }
+
+    .member-card:hover .member-info {
+      border-top-color: var(--gold);
+    }
+
+    .member-role-badge {
+      display: inline-block;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 3px 10px;
+      margin-bottom: 0.6rem;
+      transition: var(--transition);
+    }
+
+    .member-card:hover .member-role-badge {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+    }
+
+    .member-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--black);
+      line-height: 1.3;
+    }
+
+    /* ===== SECTION DIVIDER ===== */
+    .board-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .board-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--gold-border);
+    }
+
+    .board-divider-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Tooltip */
+    #memberTooltip {
+      display: none;
+      position: fixed;
+      background: var(--black);
+      border: 1px solid var(--gold-border);
+      padding: 0.8rem 1.2rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+      pointer-events: none;
+      z-index: 200;
+      max-width: 220px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      .director-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .director-photo-wrap { margin: 0 auto; width: fit-content; }
+      .director-photo { width: 200px; height: 230px; }
+      .director-bio { max-width: 100%; }
+      .director-card::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MARQUEE BANNER -->
+  <div class="marquee-banner">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      ✦ MAISON NOIR — AUTUMN / WINTER COLLECTION NOW AVAILABLE &nbsp;&nbsp;&nbsp;
+      ✦ GRAND RUNWAY SHOW — LAGOS, MAY 10, 2025 &nbsp;&nbsp;&nbsp;
+      ✦ BOARD OF TRUSTEES — VISIONARIES SHAPING LUXURY FASHION IN AFRICA &nbsp;&nbsp;&nbsp;
+      ✦ BESPOKE CONSULTATIONS — BOOK YOUR APPOINTMENT TODAY &nbsp;&nbsp;&nbsp;
+    </marquee>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">Maison <span>Noir</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html" class="active">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <p class="page-hero-label">The People Behind the Vision</p>
+    <h1>Board of <em>Trustees</em></h1>
+    <p>The visionaries, creatives, and strategists who shape every stitch of Maison Noir.</p>
+  </div>
+
+  <!-- BOARD SECTION -->
+  <section class="section">
+
+    <!-- DIRECTOR SPOTLIGHT -->
+    <div class="director-card reveal">
+      <div class="director-photo-wrap">
+        <img class="director-photo" src="images/trustee1.jpg" alt="Victory Temiloluwa Oladosu" />
+      </div>
+      <div>
+        <span class="director-badge">Director</span>
+        <h2 class="director-name">Victory Temiloluwa<br>Oladosu</h2>
+        <p class="director-role">Director, Maison Noir</p>
+        <p class="director-bio">
+          At the helm of Maison Noir, Victory Temiloluwa Oladosu brings a bold and unwavering vision to African luxury fashion. 
+          With a commitment to craftsmanship, cultural identity, and global excellence, Victory leads the house with purpose 
+          and an eye for what endures. Under their direction, Maison Noir has grown from a concept into a movement — 
+          proving that true luxury speaks every language.
+        </p>
+      </div>
+    </div>
+
+    <!-- BOARD MEMBERS -->
+    <div class="board-divider">
+      <div class="board-divider-line"></div>
+      <span class="board-divider-label">Board Members</span>
+      <div class="board-divider-line"></div>
+    </div>
+
+    <div class="members-grid">
+
+      <!-- Sakeenah -->
+      <div class="member-card reveal">
+        <div class="member-photo-wrap">
+          <img class="member-photo" src="images/trustee2.jpg" alt="Sakeenah Aderinto" />
+          <div class="member-overlay"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role-badge">Board Member</span>
+          <h3 class="member-name">Sakeenah Aderinto</h3>
+        </div>
+      </div>
+
+      <!-- Tabeel -->
+      <div class="member-card reveal">
+        <div class="member-photo-wrap">
+          <img class="member-photo" src="images/trustee3.jpg" alt="Tabeel Agada" />
+          <div class="member-overlay"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role-badge">Board Member</span>
+          <h3 class="member-name">Tabeel Agada</h3>
+        </div>
+      </div>
+
+      <!-- Olayinka -->
+      <div class="member-card reveal">
+        <div class="member-photo-wrap">
+          <img class="member-photo" src="images/trustee4.jpg" alt="Olayinka Adeleke" />
+          <div class="member-overlay"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role-badge">Board Member</span>
+          <h3 class="member-name">Olayinka Adeleke</h3>
+        </div>
+      </div>
+
+      <!-- Imoudu -->
+      <div class="member-card reveal">
+        <div class="member-photo-wrap">
+          <img class="member-photo" src="images/trustee5.jpg" alt="Imoudu Eshiofunhe Judah" />
+          <div class="member-overlay"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role-badge">Board Member</span>
+          <h3 class="member-name">Imoudu Eshiofunhe Judah</h3>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TOOLTIP -->
+  <div id="memberTooltip"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Maison Noir</div>
+    <p class="footer-tagline">Where darkness meets elegance</p>
+    <div class="footer-divider"></div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+    <p class="footer-copy">© 2024 Maison Noir — All rights reserved. CSC 106 / IFT 203 Project</p>
+  </footer>
+
+  <script>
+    // ===== SCROLL REVEAL =====
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ===== MEMBER CARD RADIAL GLOW =====
+    document.querySelectorAll('.member-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(184,146,46,0.04), #fff 70%)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.background = '';
+      });
+    });
+
+    // ===== ROLE TOOLTIP =====
+    const roles = {
+      'Sakeenah Aderinto': 'Board Member — Maison Noir',
+      'Tabeel Agada': 'Board Member — Maison Noir',
+      'Olayinka Adeleke': 'Board Member — Maison Noir',
+      'Imoudu Eshiofunhe Judah': 'Board Member — Maison Noir',
+    };
+
+    const tooltip = document.getElementById('memberTooltip');
+    document.querySelectorAll('.member-name').forEach(el => {
+      el.style.cursor = 'default';
+      el.addEventListener('mouseenter', () => {
+        tooltip.textContent = roles[el.textContent] || '';
+        tooltip.style.display = 'block';
+      });
+      el.addEventListener('mousemove', (e) => {
+        tooltip.style.left = (e.clientX + 14) + 'px';
+        tooltip.style.top = (e.clientY + 14) + 'px';
+      });
+      el.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

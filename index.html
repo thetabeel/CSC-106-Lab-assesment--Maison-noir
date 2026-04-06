@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maison Noir — Luxury Fashion House</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- MARQUEE BANNER -->
+  <div class="marquee-banner">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      ✦ MAISON NOIR — AUTUMN / WINTER COLLECTION NOW AVAILABLE &nbsp;&nbsp;&nbsp;
+      ✦ GRAND RUNWAY SHOW — LAGOS, MAY 10, 2025 &nbsp;&nbsp;&nbsp;
+      ✦ EXCLUSIVE TRUNK SHOW — ABUJA, JUNE 3, 2025 &nbsp;&nbsp;&nbsp;
+      ✦ BESPOKE CONSULTATIONS — BOOK YOUR APPOINTMENT TODAY &nbsp;&nbsp;&nbsp;
+      ✦ NEW ARRIVALS: THE OBSIDIAN SERIES — SHOP NOW &nbsp;&nbsp;&nbsp;
+    </marquee>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">Maison <span>Noir</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="home-hero">
+    <div class="hero-deco">MN</div>
+    <p class="hero-eyebrow">Est. 2024 — Lagos, Nigeria</p>
+    <h1 class="hero-title">
+      Maison
+      <span class="italic">Noir</span>
+    </h1>
+    <p class="hero-sub" id="typewriter"></p>
+    <div class="hero-cta">
+      <a href="products.html" class="btn"><span>Explore Collections</span></a>
+      <a href="appointments.html" class="btn btn-filled"><span>Book Appointment</span></a>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <div class="quote-strip reveal">
+    <blockquote>"Luxury is not about what you own — it is about how you carry yourself."</blockquote>
+    <cite>— Maison Noir, Manifesto 2024</cite>
+  </div>
+
+  <!-- FEATURED COLLECTIONS -->
+  <section class="section reveal">
+    <p class="section-label">Curated Selections</p>
+    <h2 class="section-title">Featured <em>Collections</em></h2>
+    <div class="featured-row">
+      <div class="featured-card" onclick="window.location.href='products.html'">
+        <div class="featured-card-img">
+          <img src="images/img6.jpg" alt="Obsidian Soleil Gown" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.6s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div class="featured-card-body">
+          <p class="featured-card-category">Evening Wear — Signature</p>
+          <h3 class="featured-card-title">Obsidian Soleil Gown</h3>
+        </div>
+      </div>
+      <div class="featured-card" onclick="window.location.href='products.html'">
+        <div class="featured-card-img">
+          <img src="images/img1.jpg" alt="Cacao Reverie Jumpsuit" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.6s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div class="featured-card-body">
+          <p class="featured-card-category">Evening Wear</p>
+          <h3 class="featured-card-title">Cacao Reverie Jumpsuit</h3>
+        </div>
+      </div>
+      <div class="featured-card" onclick="window.location.href='products.html'">
+        <div class="featured-card-img">
+          <img src="images/img2.jpg" alt="Emerald Guard Suit" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.6s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div class="featured-card-body">
+          <p class="featured-card-category">Bespoke</p>
+          <h3 class="featured-card-title">Emerald Guard Suit</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="section reveal" style="background: var(--surface-2); border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1000px; margin: 0 auto;">
+      <div>
+        <p class="section-label">Our Story</p>
+        <h2 class="section-title">Crafted <em>for the bold</em></h2>
+        <div class="gold-line"></div>
+        <p style="color: var(--text-soft); font-size: 0.9rem; line-height: 1.9; margin-bottom: 1.5rem;">
+          Maison Noir was born from a vision to bring world-class luxury fashion to the African continent — 
+          rooted in local heritage, expressed through a global lens. Every piece we create carries intention, 
+          artistry, and an unwavering commitment to craftsmanship.
+        </p>
+        <a href="trustees.html" class="btn"><span>Meet Our Board</span></a>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-family: var(--font-display); font-size: 8rem; color: var(--gold-border); line-height: 1; margin-bottom: 1rem;">✦</div>
+        <div style="font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted);">Where Black is a Canvas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section reveal" style="text-align: center;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 700px; margin: 0 auto;">
+      <div class="stat-item">
+        <div style="font-family: var(--font-display); font-size: 3rem; color: var(--gold); font-weight: 300;" id="stat1">0</div>
+        <div style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px;">Pieces Crafted</div>
+      </div>
+      <div class="stat-item">
+        <div style="font-family: var(--font-display); font-size: 3rem; color: var(--gold); font-weight: 300;" id="stat2">0</div>
+        <div style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px;">Global Clients</div>
+      </div>
+      <div class="stat-item">
+        <div style="font-family: var(--font-display); font-size: 3rem; color: var(--gold); font-weight: 300;" id="stat3">0</div>
+        <div style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px;">Runway Shows</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Maison Noir</div>
+    <p class="footer-tagline">Where darkness meets elegance</p>
+    <div class="footer-divider"></div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+    <p class="footer-copy">© 2024 Maison Noir — All rights reserved. CSC 106 / IFT 203 Project</p>
+  </footer>
+
+  <script>
+    // ===== TYPEWRITER EFFECT =====
+    const phrases = [
+      "Where darkness meets elegance.",
+      "Luxury crafted for the bold.",
+      "Fashion rooted in African heritage.",
+      "Bespoke. Refined. Unforgettable."
+    ];
+    let phraseIndex = 0, charIndex = 0, isDeleting = false;
+    const el = document.getElementById('typewriter');
+
+    function type() {
+      const current = phrases[phraseIndex];
+      if (isDeleting) {
+        el.textContent = current.substring(0, charIndex--);
+        if (charIndex < 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(type, 500);
+          return;
+        }
+      } else {
+        el.textContent = current.substring(0, charIndex++);
+        if (charIndex > current.length) {
+          isDeleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+      }
+      setTimeout(type, isDeleting ? 50 : 80);
+    }
+    type();
+
+    // ===== SCROLL REVEAL =====
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ===== ANIMATED STATS COUNTER =====
+    function animateCount(id, target, suffix = '') {
+      const el = document.getElementById(id);
+      let count = 0;
+      const increment = Math.ceil(target / 60);
+      const timer = setInterval(() => {
+        count = Math.min(count + increment, target);
+        el.textContent = count + suffix;
+        if (count >= target) clearInterval(timer);
+      }, 30);
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount('stat1', 342, '+');
+          animateCount('stat2', 120, '+');
+          animateCount('stat3', 18);
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statsObserver.observe(document.querySelector('.stat-item'));
+  </script>
+
+</body>
+</html>

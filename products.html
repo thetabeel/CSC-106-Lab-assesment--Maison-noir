@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collections — Maison Noir</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .product-card:hover .product-img img {
+      transform: scale(1.04);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MARQUEE BANNER -->
+  <div class="marquee-banner">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      ✦ NEW ARRIVALS: THE OBSIDIAN SERIES — SHOP NOW &nbsp;&nbsp;&nbsp;
+      ✦ RUNWAY SHOW — LAGOS, MAY 10, 2025 &nbsp;&nbsp;&nbsp;
+      ✦ COMPLIMENTARY STYLING SESSION WITH EVERY BESPOKE ORDER &nbsp;&nbsp;&nbsp;
+      ✦ FREE DELIVERY ON ORDERS ABOVE ₦500,000 &nbsp;&nbsp;&nbsp;
+      ✦ WINTER COLLECTION — LIMITED EDITION PIECES AVAILABLE &nbsp;&nbsp;&nbsp;
+    </marquee>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">Maison <span>Noir</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <p class="page-hero-label">Maison Noir — 2024/2025</p>
+    <h1>Our <em>Collections</em></h1>
+    <p>Each piece is a meditation on elegance — sewn with intention, worn with purpose.</p>
+  </div>
+
+  <!-- PRODUCTS SECTION -->
+  <section class="section">
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="eveningwear">Evening Wear</button>
+      <button class="filter-btn" data-filter="ready-to-wear">Ready to Wear</button>
+      <button class="filter-btn" data-filter="bespoke">Bespoke</button>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="grid-3" id="productGrid">
+
+      <!-- 1. Cacao Reverie Jumpsuit -->
+      <div class="product-card reveal" data-cat="eveningwear"
+        onclick="openModal('Cacao Reverie Jumpsuit', 'Evening Wear', '₦380,000',
+          'An off-shoulder wide-leg jumpsuit in rich cacao crepe. The pleated sweetheart bodice creates dramatic volume at the shoulders while a cinched waist flows into palazzo-wide trousers. Power, poise, and presence in one silhouette.')">
+        <div class="product-img">
+          <img src="images/img1.jpg" alt="Cacao Reverie Jumpsuit" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Evening Wear</p>
+          <h3 class="product-name">Cacao Reverie Jumpsuit</h3>
+          <p class="product-price">₦380,000</p>
+        </div>
+      </div>
+
+      <!-- 2. Emerald Guard Suit -->
+      <div class="product-card reveal" data-cat="bespoke"
+        onclick="openModal('Emerald Guard Suit', 'Bespoke', '₦520,000',
+          'A double-breasted statement suit in deep forest green Italian wool, finished with 24k gold-plated buttons. Sharp lapels, impeccable shoulder structure, and a slim trouser cut designed to command any room. Bespoke cut to your measurements.')">
+        <div class="product-img">
+          <img src="images/img2.jpg" alt="Emerald Guard Suit" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Bespoke</p>
+          <h3 class="product-name">Emerald Guard Suit</h3>
+          <p class="product-price">₦520,000</p>
+        </div>
+      </div>
+
+      <!-- 3. Sage Meridian Suit -->
+      <div class="product-card reveal" data-cat="bespoke"
+        onclick="openModal('Sage Meridian Suit', 'Bespoke', '₦610,000',
+          'A sculptural single-breasted suit in sage green crepe with a dramatic draped sash cascading from shoulder to hem. The flowing chiffon accent and crystal brooch elevate this beyond suiting into wearable architecture. Available in custom sizing.')">
+        <div class="product-img">
+          <img src="images/img3.jpg" alt="Sage Meridian Suit" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Bespoke</p>
+          <h3 class="product-name">Sage Meridian Suit</h3>
+          <p class="product-price">₦610,000</p>
+        </div>
+      </div>
+
+      <!-- 4. Ivory Dusk Three-Piece -->
+      <div class="product-card reveal" data-cat="ready-to-wear"
+        onclick="openModal('Ivory Dusk Three-Piece', 'Ready to Wear', '₦295,000',
+          'A clean champagne three-piece comprising tailored waistcoat, slim trouser, and dress shirt. Styled with a deep burgundy tie and finished with a dress watch — this is quiet confidence at its finest. Ready to wear in sizes S–XXL.')">
+        <div class="product-img">
+          <img src="images/img4.jpg" alt="Ivory Dusk Three-Piece" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Ready to Wear</p>
+          <h3 class="product-name">Ivory Dusk Three-Piece</h3>
+          <p class="product-price">₦295,000</p>
+        </div>
+      </div>
+
+      <!-- 5. Terrain Edit -->
+      <div class="product-card reveal" data-cat="ready-to-wear"
+        onclick="openModal('The Terrain Edit', 'Ready to Wear', '₦145,000',
+          'A tonal earth co-ord pairing a chocolate ribbed bodysuit with high-waisted khaki wide-leg shorts. Finished with a thick leather belt, gold strappy heels, and a structured handbag. Effortless dressed-down luxury for day-to-evening transitions.')">
+        <div class="product-img">
+          <img src="images/img5.jpg" alt="The Terrain Edit" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Ready to Wear</p>
+          <h3 class="product-name">The Terrain Edit</h3>
+          <p class="product-price">₦145,000</p>
+        </div>
+      </div>
+
+      <!-- 6. Obsidian Soleil Gown -->
+      <div class="product-card reveal" data-cat="eveningwear"
+        onclick="openModal('Obsidian Soleil Gown', 'Evening Wear', '₦780,000',
+          'The showpiece of the season. A one-shoulder column gown in liquid gold organza, dramatically contrasted with cascading black ruffles and a full-length black tulle sleeve. Worn where legacy is made. Only 8 pieces produced — each numbered and signed.')">
+        <div class="product-img">
+          <img src="images/img6.jpg" alt="Obsidian Soleil Gown" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Evening Wear</p>
+          <h3 class="product-name">Obsidian Soleil Gown</h3>
+          <p class="product-price">₦780,000</p>
+        </div>
+      </div>
+
+      <!-- 7. Ember Silhouette -->
+      <div class="product-card reveal" data-cat="ready-to-wear"
+        onclick="openModal('Ember Silhouette', 'Ready to Wear', '₦118,000',
+          'A bold tangerine button-front waistcoat top with structured peplum hem, paired with high-rise wide-leg denim. The gold-button detail adds refinement to the casual silhouette. A statement of modern confidence in a pop of colour.')">
+        <div class="product-img">
+          <img src="images/img7.jpg" alt="Ember Silhouette" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Ready to Wear</p>
+          <h3 class="product-name">Ember Silhouette</h3>
+          <p class="product-price">₦118,000</p>
+        </div>
+      </div>
+
+      <!-- 8. Noir Ease Co-ord -->
+      <div class="product-card reveal" data-cat="ready-to-wear"
+        onclick="openModal('Noir Ease Co-ord', 'Ready to Wear', '₦132,000',
+          'A relaxed-luxe pairing of a fitted black cap-sleeve bodysuit with charcoal wide-leg pleated trousers in micro-stripe wool blend. Minimal, intentional, and effortlessly sharp. Complete the look with a white cap and sleek crossbody.')">
+        <div class="product-img">
+          <img src="images/img8.jpg" alt="Noir Ease Co-ord" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Ready to Wear</p>
+          <h3 class="product-name">Noir Ease Co-ord</h3>
+          <p class="product-price">₦132,000</p>
+        </div>
+      </div>
+
+      <!-- 9. Coastal Repose -->
+      <div class="product-card reveal" data-cat="ready-to-wear"
+        onclick="openModal('Coastal Repose', 'Ready to Wear', '₦155,000',
+          'A refined resort look pairing a sage mint textured polo with crisp white linen trousers. Finished with a leather folio and black leather slides. The definition of polished ease for the man who moves between boardroom and beach without missing a beat.')">
+        <div class="product-img">
+          <img src="images/img9.jpg" alt="Coastal Repose" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Ready to Wear</p>
+          <h3 class="product-name">Coastal Repose</h3>
+          <p class="product-price">₦155,000</p>
+        </div>
+      </div>
+
+      <!-- 10. Deep Current Co-ord -->
+      <div class="product-card reveal" data-cat="ready-to-wear"
+        onclick="openModal('Deep Current Co-ord', 'Ready to Wear', '₦185,000',
+          'A matching teal two-piece in fluid satin-finish fabric — oversized half-sleeve camp shirt with relaxed wide-leg trousers. An easy monochromatic statement. Worn open or buttoned, styled with white sneakers or leather loafers.')">
+        <div class="product-img">
+          <img src="images/img10.jpg" alt="Deep Current Co-ord" />
+          <div class="product-overlay"><span style="font-size:0.7rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">View Details</span></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Ready to Wear</p>
+          <h3 class="product-name">Deep Current Co-ord</h3>
+          <p class="product-price">₦185,000</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <p class="modal-category" id="mCat"></p>
+      <h2 class="modal-name" id="mName"></h2>
+      <p class="modal-price" id="mPrice"></p>
+      <p class="modal-desc" id="mDesc"></p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="appointments.html" class="btn btn-filled"><span>Book Fitting</span></a>
+        <a href="appointments.html" class="btn"><span>Enquire</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Maison Noir</div>
+    <p class="footer-tagline">Where darkness meets elegance</p>
+    <div class="footer-divider"></div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+    <p class="footer-copy">© 2024 Maison Noir — All rights reserved. CSC 106 / IFT 203 Project</p>
+  </footer>
+
+  <script>
+    function openModal(name, cat, price, desc) {
+      document.getElementById('mName').textContent = name;
+      document.getElementById('mCat').textContent = cat;
+      document.getElementById('mPrice').textContent = price;
+      document.getElementById('mDesc').textContent = desc;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(event) {
+      if (!event || event.target === document.getElementById('modalOverlay') || event.currentTarget.classList.contains('modal-close')) {
+        document.getElementById('modalOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const products = document.querySelectorAll('.product-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        products.forEach(p => {
+          if (filter === 'all' || p.dataset.cat === filter) {
+            p.style.display = '';
+            setTimeout(() => p.style.opacity = 1, 10);
+          } else {
+            p.style.opacity = 0;
+            setTimeout(() => p.style.display = 'none', 300);
+          }
+        });
+      });
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

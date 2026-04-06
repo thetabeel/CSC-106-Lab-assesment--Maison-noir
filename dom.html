@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOM Structure — Maison Noir</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .dom-page-selector {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .dom-page-btn {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--gold-border);
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dom-page-btn.active,
+    .dom-page-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .dom-node-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      margin: 2px 0;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 2px 4px;
+      transition: background 0.2s;
+    }
+
+    .dom-node-row:hover {
+      background: rgba(201,168,76,0.06);
+    }
+
+    .dom-toggle {
+      color: var(--gold);
+      font-size: 0.7rem;
+      width: 14px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      user-select: none;
+    }
+
+    .dom-children {
+      margin-left: 1.4rem;
+      border-left: 1px solid var(--gold-border);
+      padding-left: 1rem;
+    }
+
+    .dom-children.collapsed { display: none; }
+
+    .dom-tag-open { color: var(--gold); }
+    .dom-tag-close { color: var(--gold); opacity: 0.6; }
+    .dom-attr-name { color: #8eb3d4; }
+    .dom-attr-val { color: #a8d48a; }
+    .dom-text-node { color: var(--text-muted); font-style: italic; }
+    .dom-comment { color: #6a7a55; font-style: italic; }
+
+    .dom-info-panel {
+      background: var(--surface-2);
+      border: 1px solid var(--gold-border);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .dom-stat {
+      text-align: center;
+    }
+
+    .dom-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold);
+    }
+
+    .dom-stat-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .dom-explain {
+      background: var(--surface);
+      border-left: 2px solid var(--gold);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.83rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    .dom-explain strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- MARQUEE BANNER -->
+  <div class="marquee-banner">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      ✦ DOM STRUCTURE — DOCUMENT OBJECT MODEL VISUALISATION FOR MAISON NOIR &nbsp;&nbsp;&nbsp;
+      ✦ CSC 106 / IFT 203 — INTRODUCTION TO WEB TECHNOLOGIES — MIVA OPEN UNIVERSITY &nbsp;&nbsp;&nbsp;
+      ✦ CLICK ANY NODE TO EXPAND OR COLLAPSE ITS CHILDREN &nbsp;&nbsp;&nbsp;
+    </marquee>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">Maison <span>Noir</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html" class="active">DOM</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <p class="page-hero-label">CSC 106 / IFT 203 — Technical Documentation</p>
+    <h1>DOM <em>Structure</em></h1>
+    <p>A visual representation of the Document Object Model for each page of this website.</p>
+  </div>
+
+  <!-- DOM SECTION -->
+  <section class="section">
+
+    <div class="dom-explain">
+      <strong>What is the DOM?</strong> The Document Object Model is a tree-structured representation of an HTML page created by the browser. 
+      Every HTML element becomes a <strong>node</strong> in the tree. JavaScript uses the DOM to dynamically read, add, modify, 
+      or delete elements and their content. Below is the DOM tree for each page of the Maison Noir website.
+    </div>
+
+    <!-- COLOR LEGEND -->
+    <div class="dom-legend" style="margin-bottom:2rem;">
+      <div class="dom-legend-item"><div class="dom-dot" style="background:#c9a84c;"></div> HTML Tags</div>
+      <div class="dom-legend-item"><div class="dom-dot" style="background:#8eb3d4;"></div> Attributes</div>
+      <div class="dom-legend-item"><div class="dom-dot" style="background:#a8d48a;"></div> Attribute Values</div>
+      <div class="dom-legend-item"><div class="dom-dot" style="background:#6b5a40;"></div> Text Nodes</div>
+      <div class="dom-legend-item"><div class="dom-dot" style="background:#6a7a55;"></div> Comments</div>
+    </div>
+
+    <!-- PAGE SELECTOR -->
+    <div class="dom-page-selector">
+      <button class="dom-page-btn active" onclick="showPage('index')">index.html</button>
+      <button class="dom-page-btn" onclick="showPage('products')">products.html</button>
+      <button class="dom-page-btn" onclick="showPage('trustees')">trustees.html</button>
+      <button class="dom-page-btn" onclick="showPage('events')">events.html</button>
+      <button class="dom-page-btn" onclick="showPage('appointments')">appointments.html</button>
+      <button class="dom-page-btn" onclick="showPage('dom')">dom.html</button>
+    </div>
+
+    <!-- DOM STATS -->
+    <div class="dom-info-panel" id="domStats"></div>
+
+    <!-- DOM TREE DISPLAY -->
+    <div class="dom-tree" id="domTreeDisplay"></div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Maison Noir</div>
+    <p class="footer-tagline">Where darkness meets elegance</p>
+    <div class="footer-divider"></div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Collections</a></li>
+      <li><a href="trustees.html">Board</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="dom.html">DOM</a></li>
+    </ul>
+    <p class="footer-copy">© 2024 Maison Noir — All rights reserved. CSC 106 / IFT 203 Project</p>
+  </footer>
+
+  <script>
+    // ===== DOM TREE DATA =====
+    const pages = {
+      index: {
+        title: 'index.html — Home Page',
+        elements: 42, textNodes: 18, attributes: 76, depth: 7,
+        tree: [
+          { tag: 'html', attrs: [{n:'lang',v:'en'}], children: [
+            { tag: 'head', attrs: [], children: [
+              { tag: 'meta', attrs: [{n:'charset',v:'UTF-8'}], self: true },
+              { tag: 'meta', attrs: [{n:'name',v:'viewport'},{n:'content',v:'width=device-width'}], self: true },
+              { tag: 'title', attrs: [], text: 'Maison Noir — Luxury Fashion House' },
+              { tag: 'link', attrs: [{n:'rel',v:'stylesheet'},{n:'href',v:'style.css'}], self: true }
+            ]},
+            { tag: 'body', attrs: [], children: [
+              { tag: 'div', attrs: [{n:'class',v:'marquee-banner'}], children: [
+                { tag: 'marquee', attrs: [{n:'behavior',v:'scroll'},{n:'direction',v:'left'}], text: '✦ MAISON NOIR — AUTUMN / WINTER COLLECTION...' }
+              ]},
+              { tag: 'nav', attrs: [], children: [
+                { tag: 'a', attrs: [{n:'href',v:'index.html'},{n:'class',v:'nav-logo'}], text: 'Maison Noir' },
+                { tag: 'ul', attrs: [{n:'class',v:'nav-links'}], children: [
+                  { tag: 'li', attrs: [], children: [{ tag: 'a', attrs: [{n:'href',v:'index.html'},{n:'class',v:'active'}], text: 'Home' }]},
+                  { tag: 'li', attrs: [], children: [{ tag: 'a', attrs: [{n:'href',v:'products.html'}], text: 'Collections' }]},
+                  { tag: 'li', attrs: [], children: [{ tag: 'a', attrs: [{n:'href',v:'trustees.html'}], text: 'Board' }]},
+                  { tag: 'li', attrs: [], children: [{ tag: 'a', attrs: [{n:'href',v:'events.html'}], text: 'Events' }]},
+                  { tag: 'li', attrs: [], children: [{ tag: 'a', attrs: [{n:'href',v:'appointments.html'}], text: 'Appointments' }]},
+                  { tag: 'li', attrs: [], children: [{ tag: 'a', attrs: [{n:'href',v:'dom.html'}], text: 'DOM' }]}
+                ]}
+              ]},
+              { tag: 'section', attrs: [{n:'class',v:'home-hero'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'hero-deco'}], text: 'MN' },
+                { tag: 'p', attrs: [{n:'class',v:'hero-eyebrow'}], text: 'Est. 2024 — Lagos, Nigeria' },
+                { tag: 'h1', attrs: [{n:'class',v:'hero-title'}], children: [
+                  { tag: 'span', attrs: [], text: 'Maison' },
+                  { tag: 'span', attrs: [{n:'class',v:'italic'}], text: 'Noir' }
+                ]},
+                { tag: 'p', attrs: [{n:'id',v:'typewriter'}], text: '' },
+                { tag: 'div', attrs: [{n:'class',v:'hero-cta'}], children: [
+                  { tag: 'a', attrs: [{n:'href',v:'products.html'},{n:'class',v:'btn'}], text: 'Explore Collections' },
+                  { tag: 'a', attrs: [{n:'href',v:'appointments.html'},{n:'class',v:'btn btn-filled'}], text: 'Book Appointment' }
+                ]}
+              ]},
+              { tag: 'div', attrs: [{n:'class',v:'quote-strip reveal'}], children: [
+                { tag: 'blockquote', attrs: [], text: '"Luxury is not about what you own..."' },
+                { tag: 'cite', attrs: [], text: '— Maison Noir, Manifesto 2024' }
+              ]},
+              { tag: 'section', attrs: [{n:'class',v:'section reveal'}], children: [
+                { tag: 'p', attrs: [{n:'class',v:'section-label'}], text: 'Curated Selections' },
+                { tag: 'h2', attrs: [{n:'class',v:'section-title'}], text: 'Featured Collections' },
+                { tag: 'div', attrs: [{n:'class',v:'featured-row'}], children: [
+                  { tag: 'div', attrs: [{n:'class',v:'featured-card'}], text: '... The Obsidian Series' },
+                  { tag: 'div', attrs: [{n:'class',v:'featured-card'}], text: '... Velvet Nocturne' },
+                  { tag: 'div', attrs: [{n:'class',v:'featured-card'}], text: '... Golden Meridian' }
+                ]}
+              ]},
+              { tag: 'footer', attrs: [], children: [
+                { tag: 'div', attrs: [{n:'class',v:'footer-logo'}], text: 'Maison Noir' },
+                { tag: 'p', attrs: [{n:'class',v:'footer-tagline'}], text: 'Where darkness meets elegance' },
+                { tag: 'ul', attrs: [{n:'class',v:'footer-links'}], text: '... nav links' },
+                { tag: 'p', attrs: [{n:'class',v:'footer-copy'}], text: '© 2024 Maison Noir' }
+              ]},
+              { tag: 'script', attrs: [], text: '/* Typewriter, ScrollReveal, Counter JS */' }
+            ]}
+          ]}
+        ]
+      },
+      products: {
+        title: 'products.html — Collections Page',
+        elements: 58, textNodes: 22, attributes: 94, depth: 8,
+        tree: [
+          { tag: 'html', attrs: [{n:'lang',v:'en'}], children: [
+            { tag: 'head', attrs: [], children: [
+              { tag: 'title', attrs: [], text: 'Collections — Maison Noir' },
+              { tag: 'link', attrs: [{n:'rel',v:'stylesheet'},{n:'href',v:'style.css'}], self: true }
+            ]},
+            { tag: 'body', attrs: [], children: [
+              { comment: 'MARQUEE BANNER' },
+              { tag: 'div', attrs: [{n:'class',v:'marquee-banner'}], children: [
+                { tag: 'marquee', attrs: [{n:'behavior',v:'scroll'}], text: '✦ NEW ARRIVALS: THE OBSIDIAN SERIES...' }
+              ]},
+              { comment: 'NAVIGATION' },
+              { tag: 'nav', attrs: [], text: '... same link structure as all pages' },
+              { comment: 'PAGE HERO' },
+              { tag: 'div', attrs: [{n:'class',v:'page-hero'}], children: [
+                { tag: 'p', attrs: [{n:'class',v:'page-hero-label'}], text: 'Maison Noir — 2024/2025' },
+                { tag: 'h1', attrs: [], children: [
+                  { tag: 'em', attrs: [], text: 'Collections' }
+                ]}
+              ]},
+              { comment: 'FILTER BAR + PRODUCT GRID' },
+              { tag: 'section', attrs: [{n:'class',v:'section'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'filter-bar'},{n:'id',v:'filterBar'}], children: [
+                  { tag: 'button', attrs: [{n:'class',v:'filter-btn active'},{n:'data-filter',v:'all'}], text: 'All' },
+                  { tag: 'button', attrs: [{n:'class',v:'filter-btn'},{n:'data-filter',v:'eveningwear'}], text: 'Evening Wear' },
+                  { tag: 'button', attrs: [{n:'class',v:'filter-btn'},{n:'data-filter',v:'ready-to-wear'}], text: 'Ready to Wear' },
+                  { tag: 'button', attrs: [{n:'class',v:'filter-btn'},{n:'data-filter',v:'bespoke'}], text: 'Bespoke' },
+                  { tag: 'button', attrs: [{n:'class',v:'filter-btn'},{n:'data-filter',v:'accessories'}], text: 'Accessories' }
+                ]},
+                { tag: 'div', attrs: [{n:'class',v:'grid-3'},{n:'id',v:'productGrid'}], children: [
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'eveningwear'}], text: 'Velvet Nocturne Gown' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'bespoke'}], text: 'Le Smoking Suit' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'ready-to-wear'}], text: 'Obsidian Wrap Dress' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'accessories'}], text: 'Golden Meridian Clutch' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'eveningwear'}], text: 'Noir Cascade Cape' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'ready-to-wear'}], text: 'The Drift Blouse' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'accessories'}], text: 'Obsidian Chain Necklace' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'bespoke'}], text: 'Atelier Kaftan' },
+                  { tag: 'div', attrs: [{n:'class',v:'product-card'},{n:'data-cat',v:'eveningwear'}], text: 'The Onyx Column Dress' }
+                ]}
+              ]},
+              { comment: 'MODAL OVERLAY' },
+              { tag: 'div', attrs: [{n:'class',v:'modal-overlay'},{n:'id',v:'modalOverlay'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'modal'}], children: [
+                  { tag: 'button', attrs: [{n:'class',v:'modal-close'}], text: '✕' },
+                  { tag: 'p', attrs: [{n:'class',v:'modal-category'},{n:'id',v:'mCat'}], text: '[dynamic]' },
+                  { tag: 'h2', attrs: [{n:'class',v:'modal-name'},{n:'id',v:'mName'}], text: '[dynamic]' },
+                  { tag: 'p', attrs: [{n:'class',v:'modal-price'},{n:'id',v:'mPrice'}], text: '[dynamic]' },
+                  { tag: 'p', attrs: [{n:'class',v:'modal-desc'},{n:'id',v:'mDesc'}], text: '[dynamic]' }
+                ]}
+              ]},
+              { tag: 'footer', attrs: [], text: '... footer' },
+              { tag: 'script', attrs: [], text: '/* Product filter, Modal open/close, ScrollReveal JS */' }
+            ]}
+          ]}
+        ]
+      },
+      trustees: {
+        title: 'trustees.html — Board of Trustees',
+        elements: 45, textNodes: 20, attributes: 68, depth: 7,
+        tree: [
+          { tag: 'html', attrs: [{n:'lang',v:'en'}], children: [
+            { tag: 'head', attrs: [], children: [
+              { tag: 'title', attrs: [], text: 'Board of Trustees — Maison Noir' },
+              { tag: 'link', attrs: [{n:'rel',v:'stylesheet'},{n:'href',v:'style.css'}], self: true },
+              { tag: 'style', attrs: [], text: '/* page-specific trustee card styles */' }
+            ]},
+            { tag: 'body', attrs: [], children: [
+              { tag: 'div', attrs: [{n:'class',v:'marquee-banner'}], text: '...' },
+              { tag: 'nav', attrs: [], text: '... same link structure as all pages' },
+              { tag: 'div', attrs: [{n:'class',v:'page-hero'}], text: '...' },
+              { tag: 'section', attrs: [{n:'class',v:'section'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'chair-card reveal'}], children: [
+                  { tag: 'div', attrs: [{n:'class',v:'chair-avatar'}], text: 'A.O' },
+                  { tag: 'div', attrs: [], children: [
+                    { tag: 'span', attrs: [{n:'class',v:'chair-badge'}], text: 'Chairperson' },
+                    { tag: 'h2', attrs: [], text: 'Adaeze Okonkwo' },
+                    { tag: 'p', attrs: [{n:'class',v:'trustee-title'}], text: 'Founder & Creative Director' },
+                    { tag: 'p', attrs: [], text: 'A graduate of Central Saint Martins...' }
+                  ]}
+                ]},
+                { tag: 'div', attrs: [{n:'class',v:'grid-4'},{n:'id',v:'trusteesGrid'}], children: [
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Chukwuemeka Eze — CEO' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Fatimah Balogun — Head of Design' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Temi Ifeoma — Brand' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Kelechi Nwosu — Operations' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Olumide Adeyemi — Finance' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Zainab Mahmoud — Atelier' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Dare Olawale — Digital' },
+                  { tag: 'div', attrs: [{n:'class',v:'trustee-card reveal'}], text: 'Ngozi Uche — Legal' }
+                ]}
+              ]},
+              { tag: 'div', attrs: [{n:'id',v:'memberTooltip'}], text: '[tooltip — JS controlled]' },
+              { tag: 'footer', attrs: [], text: '...' },
+              { tag: 'script', attrs: [], text: '/* ScrollReveal, hover glow, tooltip JS */' }
+            ]}
+          ]}
+        ]
+      },
+      events: {
+        title: 'events.html — Upcoming Events',
+        elements: 38, textNodes: 16, attributes: 55, depth: 7,
+        tree: [
+          { tag: 'html', attrs: [{n:'lang',v:'en'}], children: [
+            { tag: 'head', attrs: [], children: [
+              { tag: 'title', attrs: [], text: 'Events — Maison Noir' },
+              { tag: 'link', attrs: [{n:'rel',v:'stylesheet'},{n:'href',v:'style.css'}], self: true }
+            ]},
+            { tag: 'body', attrs: [], children: [
+              { tag: 'div', attrs: [{n:'class',v:'marquee-banner'}], text: '...' },
+              { tag: 'nav', attrs: [], text: '... same link structure as all pages' },
+              { tag: 'div', attrs: [{n:'class',v:'page-hero'}], text: '...' },
+              { tag: 'section', attrs: [{n:'class',v:'section'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'countdown-strip reveal'}], children: [
+                  { tag: 'p', attrs: [{n:'class',v:'countdown-label'}], text: 'Next Event — Grand Runway Show, Lagos' },
+                  { tag: 'div', attrs: [{n:'class',v:'countdown-timer'}], children: [
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-unit'}], children: [
+                      { tag: 'div', attrs: [{n:'class',v:'countdown-number'},{n:'id',v:'cd-days'}], text: '00' },
+                      { tag: 'div', attrs: [{n:'class',v:'countdown-unit-label'}], text: 'Days' }
+                    ]},
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-sep'}], text: ':' },
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-unit'}], children: [
+                      { tag: 'div', attrs: [{n:'id',v:'cd-hours'}], text: '00' },
+                      { tag: 'div', attrs: [], text: 'Hours' }
+                    ]},
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-sep'}], text: ':' },
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-unit'}], children: [
+                      { tag: 'div', attrs: [{n:'id',v:'cd-mins'}], text: '00' },
+                      { tag: 'div', attrs: [], text: 'Minutes' }
+                    ]},
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-sep'}], text: ':' },
+                    { tag: 'div', attrs: [{n:'class',v:'countdown-unit'}], children: [
+                      { tag: 'div', attrs: [{n:'id',v:'cd-secs'}], text: '00' },
+                      { tag: 'div', attrs: [], text: 'Seconds' }
+                    ]}
+                  ]}
+                ]},
+                { tag: 'div', attrs: [{n:'id',v:'eventsList'}], children: [
+                  { tag: 'div', attrs: [{n:'class',v:'event-card reveal'}], text: 'Grand Runway Show — May 10' },
+                  { tag: 'div', attrs: [{n:'class',v:'event-card reveal'}], text: 'Trunk Show — Jun 3' },
+                  { tag: 'div', attrs: [{n:'class',v:'event-card reveal'}], text: 'Private Soirée — Jul 20' },
+                  { tag: 'div', attrs: [{n:'class',v:'event-card reveal'}], text: 'Pop-Up Boutique — Aug' },
+                  { tag: 'div', attrs: [{n:'class',v:'event-card reveal'}], text: 'ARISE Fashion Week — Sep' },
+                  { tag: 'div', attrs: [{n:'class',v:'event-card reveal'}], text: 'Holiday Gifting — Dec 1–5' }
+                ]}
+              ]},
+              { tag: 'footer', attrs: [], text: '...' },
+              { tag: 'script', attrs: [], text: '/* Countdown timer, event hover, ScrollReveal JS */' }
+            ]}
+          ]}
+        ]
+      },
+      appointments: {
+        title: 'appointments.html — Inquiries & Appointments',
+        elements: 52, textNodes: 24, attributes: 88, depth: 8,
+        tree: [
+          { tag: 'html', attrs: [{n:'lang',v:'en'}], children: [
+            { tag: 'head', attrs: [], children: [
+              { tag: 'title', attrs: [], text: 'Inquiries & Appointments — Maison Noir' },
+              { tag: 'link', attrs: [{n:'rel',v:'stylesheet'},{n:'href',v:'style.css'}], self: true },
+              { tag: 'style', attrs: [], text: '/* page-specific form/sidebar styles */' }
+            ]},
+            { tag: 'body', attrs: [], children: [
+              { tag: 'div', attrs: [{n:'class',v:'marquee-banner'}], text: '...' },
+              { tag: 'nav', attrs: [], text: '...' },
+              { tag: 'div', attrs: [{n:'class',v:'page-hero'}], text: '...' },
+              { tag: 'section', attrs: [{n:'class',v:'section'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'contact-split'}], children: [
+                  { tag: 'div', attrs: [], children: [
+                    { tag: 'div', attrs: [{n:'class',v:'form-grid'},{n:'id',v:'contactForm'}], children: [
+                      { tag: 'div', attrs: [{n:'class',v:'form-group'}], children: [
+                        { tag: 'label', attrs: [{n:'for',v:'firstName'}], text: 'First Name *' },
+                        { tag: 'input', attrs: [{n:'type',v:'text'},{n:'id',v:'firstName'}], self: true },
+                        { tag: 'span', attrs: [{n:'class',v:'form-error'},{n:'id',v:'firstNameErr'}], text: 'Required' }
+                      ]},
+                      { tag: 'div', attrs: [{n:'class',v:'form-group'}], text: 'Last Name field...' },
+                      { tag: 'div', attrs: [{n:'class',v:'form-group'}], text: 'Email field...' },
+                      { tag: 'div', attrs: [{n:'class',v:'form-group'}], text: 'Phone field...' },
+                      { tag: 'div', attrs: [{n:'class',v:'form-group full'}], children: [
+                        { tag: 'label', attrs: [{n:'for',v:'enquiryType'}], text: 'Type of Enquiry *' },
+                        { tag: 'select', attrs: [{n:'id',v:'enquiryType'}], children: [
+                          { tag: 'option', attrs: [{n:'value',v:''}], text: '— Select —' },
+                          { tag: 'option', attrs: [{n:'value',v:'bespoke'}], text: 'Bespoke Commission' },
+                          { tag: 'option', attrs: [{n:'value',v:'fitting'}], text: 'Fitting Appointment' }
+                        ]}
+                      ]},
+                      { tag: 'div', attrs: [{n:'class',v:'form-group full'}], children: [
+                        { tag: 'label', attrs: [{n:'for',v:'message'}], text: 'Message *' },
+                        { tag: 'textarea', attrs: [{n:'id',v:'message'},{n:'maxlength',v:'600'}], text: '' }
+                      ]},
+                      { tag: 'button', attrs: [{n:'class',v:'btn btn-filled'},{n:'onclick',v:'submitForm()'}], text: 'Send Enquiry' }
+                    ]},
+                    { tag: 'div', attrs: [{n:'class',v:'success-msg'},{n:'id',v:'successMsg'}], text: '✦ Thank you — message received.' }
+                  ]},
+                  { tag: 'div', attrs: [], children: [
+                    { tag: 'div', attrs: [{n:'class',v:'sidebar-box reveal'}], text: '... Studio information sidebar' }
+                  ]}
+                ]}
+              ]},
+              { tag: 'footer', attrs: [], text: '...' },
+              { tag: 'script', attrs: [], text: '/* Char counter, form validation, ScrollReveal JS */' }
+            ]}
+          ]}
+        ]
+      },
+      dom: {
+        title: 'dom.html — DOM Structure Page (this page)',
+        elements: 35, textNodes: 14, attributes: 52, depth: 7,
+        tree: [
+          { tag: 'html', attrs: [{n:'lang',v:'en'}], children: [
+            { tag: 'head', attrs: [], children: [
+              { tag: 'title', attrs: [], text: 'DOM Structure — Maison Noir' },
+              { tag: 'link', attrs: [{n:'rel',v:'stylesheet'},{n:'href',v:'style.css'}], self: true },
+              { tag: 'style', attrs: [], text: '/* DOM visualiser-specific styles */' }
+            ]},
+            { tag: 'body', attrs: [], children: [
+              { tag: 'div', attrs: [{n:'class',v:'marquee-banner'}], text: '...' },
+              { tag: 'nav', attrs: [], text: '... same link structure as all pages' },
+              { tag: 'div', attrs: [{n:'class',v:'page-hero'}], text: '...' },
+              { tag: 'section', attrs: [{n:'class',v:'section'}], children: [
+                { tag: 'div', attrs: [{n:'class',v:'dom-explain'}], text: 'What is the DOM? ...' },
+                { tag: 'div', attrs: [{n:'class',v:'dom-legend'}], text: '... color legend items' },
+                { tag: 'div', attrs: [{n:'class',v:'dom-page-selector'}], children: [
+                  { tag: 'button', attrs: [{n:'class',v:'dom-page-btn active'},{n:'onclick',v:'showPage(...)'}], text: 'index.html' },
+                  { tag: 'button', attrs: [{n:'class',v:'dom-page-btn'}], text: 'products.html' },
+                  { tag: 'button', attrs: [{n:'class',v:'dom-page-btn'}], text: '... more pages' }
+                ]},
+                { tag: 'div', attrs: [{n:'class',v:'dom-info-panel'},{n:'id',v:'domStats'}], text: '[dynamically rendered by JS]' },
+                { tag: 'div', attrs: [{n:'class',v:'dom-tree'},{n:'id',v:'domTreeDisplay'}], text: '[dynamically rendered by JS]' }
+              ]},
+              { tag: 'footer', attrs: [], text: '...' },
+              { tag: 'script', attrs: [], text: '/* Page selector, DOM tree renderer, toggle JS */' }
+            ]}
+          ]}
+        ]
+      }
+    };
+
+    // ===== RENDER DOM TREE =====
+    function renderNode(node, depth = 0) {
+      const wrap = document.createElement('div');
+      wrap.style.marginLeft = (depth * 0) + 'px';
+
+      if (node.comment) {
+        const row = document.createElement('div');
+        row.className = 'dom-node-row';
+        row.style.marginLeft = depth * 1.4 + 'rem';
+        row.innerHTML = `<span class="dom-comment">&lt;!-- ${node.comment} --&gt;</span>`;
+        wrap.appendChild(row);
+        return wrap;
+      }
+
+      const hasChildren = node.children && node.children.length > 0;
+      const isSelf = node.self;
+      const row = document.createElement('div');
+      row.className = 'dom-node-row';
+      row.style.marginLeft = depth * 1.4 + 'rem';
+
+      let attrStr = (node.attrs || []).map(a =>
+        ` <span class="dom-attr-name">${a.n}</span>=<span class="dom-attr-val">"${a.v}"</span>`
+      ).join('');
+
+      if (isSelf) {
+        row.innerHTML = `<span class="dom-toggle" style="opacity:0.3">─</span><span class="dom-tag-open">&lt;${node.tag}${attrStr} /&gt;</span>`;
+        wrap.appendChild(row);
+        return wrap;
+      }
+
+      if (hasChildren) {
+        const toggle = document.createElement('span');
+        toggle.className = 'dom-toggle';
+        toggle.textContent = '▼';
+
+        const tagSpan = document.createElement('span');
+        tagSpan.innerHTML = `<span class="dom-tag-open">&lt;${node.tag}${attrStr}&gt;</span>`;
+
+        row.appendChild(toggle);
+        row.appendChild(tagSpan);
+        wrap.appendChild(row);
+
+        const childrenDiv = document.createElement('div');
+        childrenDiv.className = 'dom-children';
+        node.children.forEach(child => {
+          childrenDiv.appendChild(renderNode(child, depth + 1));
+        });
+
+        const closeRow = document.createElement('div');
+        closeRow.className = 'dom-node-row';
+        closeRow.style.marginLeft = depth * 1.4 + 'rem';
+        closeRow.innerHTML = `<span class="dom-toggle" style="opacity:0">─</span><span class="dom-tag-close">&lt;/${node.tag}&gt;</span>`;
+
+        wrap.appendChild(childrenDiv);
+        wrap.appendChild(closeRow);
+
+        row.addEventListener('click', () => {
+          const collapsed = childrenDiv.classList.toggle('collapsed');
+          toggle.textContent = collapsed ? '▶' : '▼';
+        });
+      } else {
+        const textContent = node.text ? `<span class="dom-text-node">${node.text}</span>` : '';
+        row.innerHTML = `<span class="dom-toggle" style="opacity:0.3">─</span><span class="dom-tag-open">&lt;${node.tag}${attrStr}&gt;</span>${textContent}<span class="dom-tag-close">&lt;/${node.tag}&gt;</span>`;
+        wrap.appendChild(row);
+      }
+
+      return wrap;
+    }
+
+    function showPage(pageKey) {
+      // Update buttons
+      document.querySelectorAll('.dom-page-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', Object.keys(pages)[i] === pageKey);
+      });
+
+      const page = pages[pageKey];
+
+      // Stats
+      const statsEl = document.getElementById('domStats');
+      statsEl.innerHTML = `
+        <div class="dom-stat"><div class="dom-stat-num">${page.elements}</div><div class="dom-stat-label">Total Elements</div></div>
+        <div class="dom-stat"><div class="dom-stat-num">${page.textNodes}</div><div class="dom-stat-label">Text Nodes</div></div>
+        <div class="dom-stat"><div class="dom-stat-num">${page.attributes}</div><div class="dom-stat-label">Attributes</div></div>
+        <div class="dom-stat"><div class="dom-stat-num">${page.depth}</div><div class="dom-stat-label">Max Depth</div></div>
+      `;
+
+      // Tree
+      const treeEl = document.getElementById('domTreeDisplay');
+      treeEl.innerHTML = `<div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">${page.title}</div>`;
+
+      page.tree.forEach(node => {
+        treeEl.appendChild(renderNode(node, 0));
+      });
+    }
+
+    showPage('index');
+  </script>
+
+</body>
+</html>
